@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Scale, Shield, AlertTriangle, Loader2, CheckCircle, FileText, BookOpen, Gavel, Building2, Clock, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { Scale, Shield, AlertTriangle, Loader2, CheckCircle, FileText, BookOpen, Gavel, Building2, Clock, ArrowLeft, History } from "lucide-react";
 
 interface PolicyDetails {
   insurer: string;
@@ -131,7 +132,7 @@ export default function AnalyzePage() {
   return (
     <div className="min-h-screen bg-[#1A1A2E]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             {step !== "input" && (
@@ -147,12 +148,18 @@ export default function AnalyzePage() {
               <p className="text-gray-400">{step === "verdict" ? "Case Complete" : "AI Courtroom Simulation"}</p>
             </div>
           </div>
-          {step === "input" && (
-            <button onClick={() => setShowExamples(!showExamples)} className="flex items-center gap-2 px-4 py-2 bg-[#004E89]/30 text-[#4DA8FF] rounded-lg hover:bg-[#004E89]/50 transition-colors">
-              <BookOpen className="w-5 h-5" />
-              Sample Cases
-            </button>
-          )}
+          <div className="flex items-center gap-3">
+            {step === "input" && (
+              <button onClick={() => setShowExamples(!showExamples)} className="flex items-center gap-2 px-4 py-2 bg-[#004E89]/30 text-[#4DA8FF] rounded-lg hover:bg-[#004E89]/50 transition-colors">
+                <BookOpen className="w-5 h-5" />
+                Sample Cases
+              </button>
+            )}
+            <Link href="/history" className="flex items-center gap-2 px-4 py-2 bg-[#004E89]/30 text-[#4DA8FF] rounded-lg hover:bg-[#004E89]/50 transition-colors">
+              <History className="w-5 h-5" />
+              History
+            </Link>
+          </div>
         </div>
 
         {/* Sample Cases */}

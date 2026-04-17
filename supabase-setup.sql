@@ -50,3 +50,18 @@ CREATE TABLE IF NOT EXISTS chat_history (
   policy_ids UUID[],
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Create lawyer_debates table for Lawyer Arena feature
+CREATE TABLE IF NOT EXISTS lawyer_debates (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT,
+  policy_details JSONB NOT NULL,
+  claim_details JSONB NOT NULL,
+  debate JSONB NOT NULL,
+  verdict JSONB NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Index for faster queries by user and date
+CREATE INDEX IF NOT EXISTS idx_lawyer_debates_user_id ON lawyer_debates(user_id);
+CREATE INDEX IF NOT EXISTS idx_lawyer_debates_created_at ON lawyer_debates(created_at DESC);
