@@ -1,5 +1,5 @@
 import { getCompletion } from "@/lib/openrouter";
-import { supabase } from "@/lib/db/supabase";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 
 function log(level: string, message: string, data?: unknown) {
   console.log(`[${new Date().toISOString()}] [${level}] [LawyerArena] ${message}`, data || '');
@@ -72,8 +72,8 @@ Generate detailed debate with many argument turns, then final verdict as JSON.`;
     // Helper to save debate to database (non-blocking)
     const saveDebate = async (debate: unknown, verdict: unknown) => {
       try {
-        if (supabase) {
-          const { error } = await supabase
+        if (supabaseAdmin) {
+          const { error } = await supabaseAdmin
             .from("lawyer_debates")
             .insert([{
               policy_details: policyDetails,
