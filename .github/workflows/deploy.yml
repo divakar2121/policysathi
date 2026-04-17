@@ -31,9 +31,21 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
+            # Install docker-compose if not present
+            if ! command -v docker-compose &> /dev/null; then
+              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
+            
+            # Clone or pull repository
+            if [ ! -d "/home/deva/policysathi/.git" ]; then
+              git clone https://github.com/divakar2121/policysathi.git /home/deva/policysathi
+            fi
             cd /home/deva/policysathi
-            git pull origin main || true
-            docker compose down || true
-            docker compose build
-            docker compose up -d
+            git pull origin main
+            
+            # Deploy with docker-compose
+            docker-compose down || true
+            docker-compose build
+            docker-compose up -d
             docker system prune -f
